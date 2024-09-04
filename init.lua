@@ -24,6 +24,7 @@ local default_style = {
   { fg = 'Red', add_modifiers = { 'Bold', 'Underlined' } },
   empty = { fg = 'Reset' },
   current = { add_modifiers = { 'Bold', 'Reversed' } },
+  reverse_current = true,
 }
 
 local State = {}
@@ -140,11 +141,13 @@ function State:draw()
   local t = {}
   for i, _ in ipairs(self.ctx) do
     local c = tostring(i)
-    if i == self.current then
+    if i == self.current and self.style.reverse_current then
       local style = {}
       style.fg = self.style[i].fg
       style.add_modifiers = self.style.current.add_modifiers
       c = xplr.util.paint(c, style)
+    elseif i == self.current then
+      c = xplr.util.paint(c, self.style.current)
     elseif self:is_empty(i) then
       c = xplr.util.paint(c, self.style.empty)
     else
@@ -328,6 +331,9 @@ P.setup = function(config)
   end
   if config.current_style then
     _s.style.current = config.current_style
+  end
+  if config.reverse_current_style then
+    _s.style.reverse_current = config.current_style
   end
   setup_keys(config.keymap)
   if config.no_title then

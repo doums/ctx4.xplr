@@ -39,8 +39,9 @@ require('ctx4').setup({
   -- custom styles for the context numbers, this table takes 4
   -- Style objects, one for each context
   context_styles = {{…}, {…}, {…}, {…}},
-  current_style = {…} -- custom style for the current context
-  empty_style = {…} -- custom style for the empty contexts
+  current_style = {…}, -- custom style for the current context
+  empty_style = {…}, -- custom style for the empty contexts
+  reverse_current_style = true, -- reverse the current context style
 })
 ```
 
@@ -76,6 +77,22 @@ return {
   on_layout_switch = {},
 }
 ```
+
+### API
+
+The plugin provides the following functions:
+
+#### `get_current_context_num()`
+
+Returns the current active context number.
+
+#### `get_current_context_style()`
+
+Returns the current active context style.
+
+#### `get_contexts()`
+
+Returns the context state object.
 
 ### Inspiration
 
